@@ -2,19 +2,21 @@
 using namespace std;
 
 int main() {
+    ifstream Mfile("data.in");
+
     int n;
-    cin >> n;
+    Mfile >> n;
     vector<vector<int>> adj(n + 1);
     stack<int> st;
-    bool vis[n+1];
+    bool vis[n + 1];
     memset(vis, 0, sizeof(vis));
     cin.ignore();
     
-    for(int i = 1; i <= n; i++) {
-        string str;
-        getline(cin, str);
-        stringstream ss(str);
-        int x;  
+    for(int i = 1; i <= n; ++i) {
+        string s;
+        getline(Mfile, s);
+        stringstream ss(s);
+        int x; 
         vector<int> temp;
 
         while(ss >> x) {
