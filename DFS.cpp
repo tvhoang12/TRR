@@ -1,52 +1,38 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ifstream Mfile("data.in");
+stack <int> st;
+int n, a[100][100];
+bool traveled[100];
 
-    int n;
-    Mfile >> n;
-    vector<vector<int>> adj(n + 1);
-    stack<int> st;
-    bool vis[n + 1];
-    memset(vis, 0, sizeof(vis));
-    cin.ignore();
-    
-    for(int i = 1; i <= n; ++i) {
-        string s;
-        getline(Mfile, s);
-        stringstream ss(s);
-        int x; 
-        vector<int> temp;
-
-        while(ss >> x) {
-            temp.push_back(x);
-        }
-
-        adj[i].insert(adj[i].end(),temp.begin(),temp.end());
-    }
-
-    st.push(1);
-    vis[1] = 1;
-    cout << 1 << " ";
-
-    while (st.size())
-        {
-            int u = st.top();
-            st.pop();
-
-            for (int i = 0; i < adj[u].size(); i++)
-            {
-                int v = adj[u][i];
-                if(!vis[v])
-                {
-                    cout << v << " ";
-                    vis[v] = 1;
-                    st.push(u);
-                    st.push(v);
-                    break;
-                }
+void DFS(int u) {
+    st.push(u);
+    traveled[u] = 1;
+    cout << u << " ";
+    while(st.size()) {
+        int u = st.top();
+        st.pop();
+        for(int v = 1; v <= n; v++) {
+            if(a[u][v] && !traveled[v]) {
+                st.push(u);
+                st.push(v);
+                traveled[v] = 1;
+                cout << v << " ";
+                break;
             }
         }
-        cout << endl;
+    }
+
+}
+
+int main() {
+    cin >> n;
+    for(int i = 1; i <= n; i++) {
+        for(int j = 1; j <= n; j++) {
+            cin >> a[i][j];
+        }
+    }
+    memset(traveled, 0, sizeof(traveled));
+    DFS(1);
+    cout << endl;
 }
